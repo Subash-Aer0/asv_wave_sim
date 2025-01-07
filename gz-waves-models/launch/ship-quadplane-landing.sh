@@ -8,9 +8,9 @@
 trap "killall -9 arduplane & killall -9 ardurover" SIGINT SIGTERM EXIT
 
 # edit the location of these directories if different
-ARDUPILOT_ROOT="$HOME/Code/ardupilot/ardupilot"
-SITL_MODELS_DIR="$HOME/Code/ardupilot/simulation/SITL_Models"
-GZ_WAVES_MODELS_DIR="$HOME/Code/robotics/gz_waves_ws/src/asv_wave_sim/gz-waves-models"
+ARDUPILOT_ROOT="$HOME/UAV_Landing/ardupilot"
+SITL_MODELS_DIR="$HOME/UAV_Landing/gz_ws/src/SITL_Models"
+GZ_WAVES_MODELS_DIR="$HOME/ros2_ws/src/asv_wave_sim/gz-waves-models"
 
 # assume we start the script from the root directory
 ROOTDIR=$ARDUPILOT_ROOT
@@ -51,7 +51,7 @@ AUTO_OPTIONS 7
 EK3_SRC1_POSZ 3
 EOF
 
-(cd sitl/ship && $ROVER -S --model JSON --home=$HOMELAT,$HOMELONG,$HOMEALT,0 --speedup 1 --slave 0 --instance 1 --sysid 17 --defaults $SHIP_DEFAULTS,leader.param) &
+(cd sitl/ship && $ROVER -S --model JSON --home=$HOMELAT,$HOMELONG,$HOMEALT,0 --speedup 4 --slave 0 --instance 1 --sysid 17 --defaults $SHIP_DEFAULTS,leader.param) &
 
 #--------------------------------------------------------------------
 # Quadplane
@@ -85,7 +85,7 @@ SCR_DEBUG_OPTS 0
 SHIP_ENABLE 1
 EOF
 
-(cd sitl/quadplane && $PLANE -S --model JSON --home=$HOMELAT,$HOMELONG,$HOMEALT,0 --speedup 1 --slave 0 --instance 0 --sysid 1 --defaults $QUADPLANE_DEFAULTS,follower.param) &
+(cd sitl/quadplane && $PLANE -S --model JSON --home=$HOMELAT,$HOMELONG,$HOMEALT,0 --speedup 4 --slave 0 --instance 0 --sysid 1 --defaults $QUADPLANE_DEFAULTS,follower.param) &
 
 wait
 
